@@ -1,5 +1,5 @@
-import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { agregarAlCarrito } from "./store";
 
 const productos = [
