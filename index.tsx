@@ -1,5 +1,5 @@
+import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { agregarAlCarrito } from "./store";
 
 const productos = [
@@ -26,88 +26,125 @@ const productos = [
 export default function Index() {
   const router = useRouter();
 
-  const agregar = (item: any) => {
-    agregarAlCarrito(item);
-  };
-
   return (
-    <View style={{ flex: 1, padding: 20, backgroundColor: "#f5f5f5" }}>
+    <View style={styles.container}>
       
-      <Text style={{ fontSize: 28, fontWeight: "bold", marginBottom: 10 }}>
-        🛍️ Tienda
-      </Text>
+      <Text style={styles.titulo}>🛍️ Tienda</Text>
 
-      {/* 🔍 BOTÓN BUSCAR */}
-      <TouchableOpacity
-        style={{
-          backgroundColor: "blue",
-          padding: 10,
-          borderRadius: 8,
-          marginBottom: 10,
-        }}
-        onPress={() => router.push("/search")}
-      >
-        <Text style={{ color: "white", textAlign: "center" }}>
-          🔍 Buscar
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.botones}>
+        <TouchableOpacity style={styles.btnBuscar} onPress={() => router.push("/search")}>
+          <Text style={styles.textoBtn}>🔍 Buscar</Text>
+        </TouchableOpacity>
 
-      {/* 🛒 BOTÓN CARRITO */}
-      <TouchableOpacity
-        style={{
-          backgroundColor: "green",
-          padding: 10,
-          borderRadius: 8,
-          marginBottom: 15,
-        }}
-        onPress={() => router.push("/cart")}
-      >
-        <Text style={{ color: "white", textAlign: "center" }}>
-          🛒 Ir al carrito
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.btnCarrito} onPress={() => router.push("/cart")}>
+          <Text style={styles.textoBtn}>🛒 Carrito</Text>
+        </TouchableOpacity>
+      </View>
 
-      {/* 📦 LISTA DE PRODUCTOS */}
       <FlatList
         data={productos}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View
-            style={{
-              backgroundColor: "white",
-              padding: 15,
-              marginBottom: 10,
-              borderRadius: 10,
-              alignItems: "center",
-            }}
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() =>
+              router.push({
+                pathname: "/producto",
+                params: {
+                  nombre: item.nombre,
+                  precio: item.precio,
+                  imagen: item.imagen,
+                },
+              })
+            }
           >
-            <Image
-              source={{ uri: item.imagen }}
-              style={{ width: 120, height: 120, marginBottom: 10 }}
-            />
+            <Image source={{ uri: item.imagen }} style={styles.imagen} />
 
-            <Text style={{ fontSize: 16 }}>{item.nombre}</Text>
+            <Text style={styles.nombre}>{item.nombre}</Text>
 
-            <Text style={{ color: "green", marginBottom: 5 }}>
-              ${item.precio}
-            </Text>
+            <Text style={styles.precio}>${item.precio}</Text>
 
             <TouchableOpacity
-              style={{
-                backgroundColor: "black",
-                padding: 8,
-                borderRadius: 6,
-                width: "100%",
-              }}
-              onPress={() => agregar(item)}
+              style={styles.btnAgregar}
+              onPress={() => agregarAlCarrito(item)}
             >
-              <Text style={{ color: "white", textAlign: "center" }}>
-                Agregar al carrito
-              </Text>
+              <Text style={styles.textoBtn}>Agregar</Text>
             </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         )}
       />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F8FAFC",
+    padding: 20,
+  },
+  titulo: {
+    fontSize: 30,
+    fontWeight: "bold",
+    marginBottom: 15,
+    color: "#333",
+  },
+  botones: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 15,
+  },
+  btnBuscar: {
+    backgroundColor: "#4A90E2",
+    padding: 12,
+    borderRadius: 12,
+    width: "48%",
+    alignItems: "center",
+  },
+  btnCarrito: {
+    backgroundColor: "#50C878",
+    padding: 12,
+    borderRadius: 12,
+    width: "48%",
+    alignItems: "center",
+  },
+  textoBtn: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  card: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 15,
+    padding: 15,
+    marginBottom: 15,
+    alignItems: "center",
+
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+  imagen: {
+    width: 120,
+    height: 120,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  nombre: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+  },
+  precio: {
+    fontSize: 16,
+    color: "#50C878",
+    marginBottom: 10,
+  },
+  btnAgregar: {
+    backgroundColor: "#4A90E2",
+    padding: 10,
+    borderRadius: 10,
+    width: "100%",
+    alignItems: "center",
+  },
+});
