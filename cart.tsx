@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { eliminarDelCarrito, obtenerCarrito } from "./store";
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { eliminarDelCarrito, limpiarCarrito, obtenerCarrito } from "./store";
 
 export default function Cart() {
   const router = useRouter();
@@ -17,16 +17,14 @@ export default function Cart() {
       <Text style={styles.titulo}>🛒 Carrito</Text>
 
       {carrito.length === 0 ? (
-        <Text style={styles.vacio}>No hay productos</Text>
+        <Text style={styles.vacio}>Tu carrito está vacío</Text>
       ) : (
         <FlatList
           data={carrito}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(_, index) => index.toString()}
           renderItem={({ item, index }) => (
             <View style={styles.card}>
               
-              <Image source={{ uri: item.imagen }} style={styles.imagen} />
-
               <Text style={styles.nombre}>{item.nombre}</Text>
               <Text style={styles.precio}>${item.precio}</Text>
 
@@ -42,17 +40,30 @@ export default function Cart() {
         />
       )}
 
-      {/* 💰 TOTAL */}
+      {/* 💰 Total */}
       <Text style={styles.total}>Total: ${total}</Text>
 
-      {/* 💳 BOTÓN IR A COMPRA */}
+      {/* 🧾 Botones */}
       {carrito.length > 0 && (
-        <TouchableOpacity
-          style={styles.btnComprar}
-          onPress={() => router.push("/checkout")}
-        >
-          <Text style={styles.textoBtn}>Finalizar compra</Text>
-        </TouchableOpacity>
+        <>
+          <TouchableOpacity
+            style={styles.btnComprar}
+            onPress={() => {
+              alert("Compra realizada ✅");
+              limpiarCarrito();
+              router.push("/");
+            }}
+          >
+            <Text style={styles.textoBtn}>Finalizar compra</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.btnVaciar}
+            onPress={() => limpiarCarrito()}
+          >
+            <Text style={styles.textoBtn}>Vaciar carrito</Text>
+          </TouchableOpacity>
+        </>
       )}
 
     </View>
@@ -63,64 +74,69 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "#F8FAFC",
+    backgroundColor: "#F9FAFB",
   },
   titulo: {
     fontSize: 28,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 15,
+    color: "#111827",
   },
   vacio: {
-    fontSize: 16,
-    marginTop: 10,
+    fontSize: 18,
+    textAlign: "center",
+    marginTop: 50,
+    color: "#6B7280",
   },
   card: {
-    backgroundColor: "white",
+    backgroundColor: "#FFFFFF",
     padding: 15,
-    borderRadius: 12,
+    borderRadius: 15,
     marginBottom: 10,
-    alignItems: "center",
 
     shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
     elevation: 3,
   },
-  imagen: {
-    width: 80,
-    height: 80,
-    marginBottom: 5,
-    borderRadius: 10,
-  },
   nombre: {
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 18,
+    fontWeight: "600",
+    color: "#111827",
   },
   precio: {
-    color: "#50C878",
-    marginBottom: 5,
+    fontSize: 16,
+    color: "#10B981",
+    marginBottom: 10,
   },
   btnEliminar: {
-    backgroundColor: "red",
+    backgroundColor: "#EF4444",
     padding: 8,
     borderRadius: 8,
-    width: "100%",
     alignItems: "center",
   },
+  total: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginTop: 10,
+    marginBottom: 10,
+    color: "#111827",
+  },
   btnComprar: {
-    backgroundColor: "#50C878",
+    backgroundColor: "#10B981",
     padding: 15,
     borderRadius: 10,
-    marginTop: 10,
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  btnVaciar: {
+    backgroundColor: "#7C3AED",
+    padding: 12,
+    borderRadius: 10,
     alignItems: "center",
   },
   textoBtn: {
     color: "white",
-    fontWeight: "bold",
-  },
-  total: {
-    fontSize: 20,
-    marginTop: 10,
     fontWeight: "bold",
   },
 });

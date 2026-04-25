@@ -28,15 +28,20 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      
       <Text style={styles.titulo}>🛍️ Tienda</Text>
 
       <View style={styles.botones}>
-        <TouchableOpacity style={styles.btnBuscar} onPress={() => router.push("/search")}>
+        <TouchableOpacity
+          style={styles.btnBuscar}
+          onPress={() => router.push("/search")}
+        >
           <Text style={styles.textoBtn}>🔍 Buscar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.btnCarrito} onPress={() => router.push("/cart")}>
+        <TouchableOpacity
+          style={styles.btnCarrito}
+          onPress={() => router.push("/cart")}
+        >
           <Text style={styles.textoBtn}>🛒 Carrito</Text>
         </TouchableOpacity>
       </View>
@@ -60,15 +65,16 @@ export default function Index() {
           >
             <Image source={{ uri: item.imagen }} style={styles.imagen} />
 
-            <Text style={styles.nombre}>{item.nombre}</Text>
-
-            <Text style={styles.precio}>${item.precio}</Text>
+            <View style={styles.info}>
+              <Text style={styles.nombre}>{item.nombre}</Text>
+              <Text style={styles.precio}>${item.precio}</Text>
+            </View>
 
             <TouchableOpacity
               style={styles.btnAgregar}
               onPress={() => agregarAlCarrito(item)}
             >
-              <Text style={styles.textoBtn}>Agregar</Text>
+              <Text style={styles.textoBtn}>Agregar al carrito</Text>
             </TouchableOpacity>
           </TouchableOpacity>
         )}
@@ -80,14 +86,14 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F8FAFC",
+    backgroundColor: "#F9FAFB",
     padding: 20,
   },
   titulo: {
     fontSize: 30,
     fontWeight: "bold",
     marginBottom: 15,
-    color: "#333",
+    color: "#111827",
   },
   botones: {
     flexDirection: "row",
@@ -95,14 +101,14 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   btnBuscar: {
-    backgroundColor: "#4A90E2",
+    backgroundColor: "#7C3AED",
     padding: 12,
     borderRadius: 12,
     width: "48%",
     alignItems: "center",
   },
   btnCarrito: {
-    backgroundColor: "#50C878",
+    backgroundColor: "#10B981",
     padding: 12,
     borderRadius: 12,
     width: "48%",
@@ -114,37 +120,40 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: "#FFFFFF",
-    borderRadius: 15,
+    borderRadius: 20,
     padding: 15,
     marginBottom: 15,
     alignItems: "center",
-
     shadowColor: "#000",
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.06,
     shadowRadius: 10,
-    elevation: 5,
+    elevation: 4,
   },
   imagen: {
-    width: 120,
-    height: 120,
-    borderRadius: 10,
+    width: 140,
+    height: 140,
+    borderRadius: 15,
     marginBottom: 10,
+  },
+  info: {
+    alignItems: "center",
   },
   nombre: {
     fontSize: 18,
-    fontWeight: "bold",
-    color: "#333",
+    fontWeight: "600",
+    color: "#111827",
   },
   precio: {
     fontSize: 16,
-    color: "#50C878",
+    color: "#10B981",
     marginBottom: 10,
   },
   btnAgregar: {
-    backgroundColor: "#4A90E2",
-    padding: 10,
+    backgroundColor: "#7C3AED",
+    padding: 12,
     borderRadius: 10,
     width: "100%",
     alignItems: "center",
+    marginTop: 5,
   },
 });
