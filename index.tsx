@@ -5,7 +5,7 @@ import { agregarAlCarrito } from "./store";
 const productos = [
   {
     id: "1",
-    nombre: "Playera",
+    nombre: "PlayerPlayera cómoda y moderna de algodón",
     precio: 200,
     imagen: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab",
   },
@@ -21,6 +21,12 @@ const productos = [
     precio: 150,
     imagen: "https://images.unsplash.com/photo-1514996937319-344454492b37",
   },
+  {
+  id: "4",
+  nombre: "Sudadera",
+  precio: 500,
+  imagen: "URL",
+}
 ];
 
 export default function Index() {
@@ -28,7 +34,7 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>🛍️ Tienda</Text>
+      <Text style={styles.titulo}> 🛒 Fashion Store</Text>
 
       <View style={styles.botones}>
         <TouchableOpacity
@@ -86,7 +92,7 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9FAFB",
+    backgroundColor: "#4A90E2",
     padding: 20,
   },
   titulo: {
